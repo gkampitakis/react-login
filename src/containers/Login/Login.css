@@ -1,0 +1,27 @@
+input {
+  display: block;
+  margin: auto;
+  width: 70%;
+  min-height: 60px;
+  color: black;
+  font-size: 25px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.submit {
+  margin-top: 15px;
+  background-color: blueviolet;
+  color: white;
+  font-size: 25px;
+  /* border:; */
+}
+
+.submit:focus {
+  outline: none;
+}
+
+.submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}

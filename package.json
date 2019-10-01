@@ -3,9 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "lodash": "^4.17.15",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
-    "react-scripts": "3.1.2"
+    "react-router": "^5.1.1",
+    "react-router-dom": "^5.1.1",
+    "react-scripts": "3.1.2",
+    "validator": "^11.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
