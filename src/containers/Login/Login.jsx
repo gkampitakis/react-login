@@ -15,7 +15,7 @@ export default class Login extends Component {
   state = {
     form: {
       email: { value: '', valid: true },
-      password: { value: '' }
+      password: { value: '',visible:false }
     }
   };
 
@@ -25,29 +25,34 @@ export default class Login extends Component {
   };
 
   emailOnChange = e => {
-    e.persist();
-    _.debounce(
-      () => {
-        console.log(e.target.value);
-      },
-      500,
-      {
-        // leading: true,
-        // trailing: true
-      }
-    )();
-
-    // const { form } = this.state;
-    // form.email.valid = true;
-    // if (!validator.isEmail(e.target.value)) form.email.valid = false;
-    // form.email.value = e.target.value;
-
-    // this.setState({ form: form });
+    const { form } = this.state;
+    form.email.value = e.target.value;
+    this.setState({ form: form });
   };
+
+  validateEmail = _.debounce(() => {
+    const { form } = this.state;
+    console.log('test');
+    console.log(this.state.form.email.value);
+
+    if (form.email.value)
+      form.email.valid = validator.isEmail(form.email.value) ? true : false;
+    else form.email.valid = true;
+
+    this.setState({ form: form });
+  }, 1000);
 
   passwordOnChange = e => {
-    // const { form } = this.state;
+    const { form } = this.state;
+    form.password.value = e.target.value;
+    this.setState({ form: form });
   };
+
+  toggleVisibility = ()=>{
+    const { form } = this.state;
+    form.password.visible = !form.password.visible;
+    this.setState({form:form});
+  }
 
   validForm =
     this.state.form.email.value &&
@@ -62,17 +67,18 @@ export default class Login extends Component {
           <input
             value={this.state.form.email.value}
             onChange={this.emailOnChange}
+            onKeyUp={this.validateEmail}
             placeholder="Email"
             type="email"
           />
-          {this.state.form.email.valid ? null : (
+          {this.state.form.email.valid ? <div style={{height:'18px'}}></div> : (
             <div style={errorMessageStyle}>Invalid Email</div>
           )}
           <input
             value={this.state.form.password.value}
             onChange={this.passwordOnChange}
             placeholder="Password"
-            type="password"
+            type={this.state.form.password.visible?'text':'password'}
           />
           <button
             disabled={!this.validForm}
@@ -83,6 +89,7 @@ export default class Login extends Component {
             Login
           </button>
         </form>
+        <button onClick={this.toggleVisibility}>Visibility</button>
       </Fragment>
     );
   }
