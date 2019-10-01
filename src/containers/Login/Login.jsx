@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import './Login.css';
 import * as validator from 'validator';
 import * as _ from 'lodash';
+import { Spinner } from 'react-bootstrap';
 
 const errorMessageStyle = {
   color: 'red',
@@ -15,13 +16,32 @@ export default class Login extends Component {
   state = {
     form: {
       email: { value: '', valid: true },
-      password: { value: '',visible:false }
+      password: { value: '', visible: false }
+    },
+    loading: false
+  };
+
+  login = async e => {
+    e.preventDefault();
+    try {
+      this.toggleLoading();
+      await this.props.login(
+        this.state.form.email.value,
+        this.state.form.password.value
+      );
+      //FIXME: redirect here
+      console.log('all good');
+    } catch (err) {
+      console.error(err);
+    } finally {
+      this.toggleLoading();
     }
   };
 
-  login = e => {
-    e.preventDefault();
-    // this.props.login();
+  toggleLoading = () => {
+    let { loading } = this.state;
+    loading = !loading;
+    this.setState({ ...this.state, loading });
   };
 
   emailOnChange = e => {
@@ -48,18 +68,19 @@ export default class Login extends Component {
     this.setState({ form: form });
   };
 
-  toggleVisibility = ()=>{
+  toggleVisibility = () => {
     const { form } = this.state;
     form.password.visible = !form.password.visible;
-    this.setState({form:form});
-  }
-
-  validForm =
-    this.state.form.email.value &&
-    this.state.form.password.value &&
-    this.state.form.email.valid;
+    this.setState({ form: form });
+  };
 
   render() {
+    let loading = this.state.loading ? (
+      <Spinner className="spinner" animation="border" role="status">
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+    ) : null;
+
     return (
       <Fragment>
         <h1>Login Please</h1>
@@ -71,17 +92,25 @@ export default class Login extends Component {
             placeholder="Email"
             type="email"
           />
-          {this.state.form.email.valid ? <div style={{height:'18px'}}></div> : (
+          {this.state.form.email.valid ? (
+            <div style={{ height: '18px' }}></div>
+          ) : (
             <div style={errorMessageStyle}>Invalid Email</div>
           )}
           <input
             value={this.state.form.password.value}
             onChange={this.passwordOnChange}
             placeholder="Password"
-            type={this.state.form.password.visible?'text':'password'}
+            type={this.state.form.password.visible ? 'text' : 'password'}
           />
           <button
-            disabled={!this.validForm}
+            disabled={
+              !(
+                this.state.form.email.valid &&
+                !_.isEmpty(this.state.form.password.value) &&
+                !_.isEmpty(this.state.form.email.value)
+              )
+            }
             className="submit"
             type="submit"
             onClick={this.login}
@@ -90,6 +119,8 @@ export default class Login extends Component {
           </button>
         </form>
         <button onClick={this.toggleVisibility}>Visibility</button>
+        <button onClick={this.toggleLoading}>Loading</button>
+        {loading}
       </Fragment>
     );
   }

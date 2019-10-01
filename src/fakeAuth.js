@@ -56,17 +56,19 @@ const Users = [
   }
 ];
 
-const Login = (email, pass, callback) => {
-  const request = cb => setTimeout(cb, 1000);
+const Login = (email, pass) => {
+  const request = fn => setTimeout(() => fn, 5000);
 
-  const user = Users.find(user => user.email === email);
-  if (!user) request(callback('User not found'));
-  else {
-    if (user.pass === pass) {
-      persist(user);
-      request(callback(null, true));
-    } else request(callback('Wrong password provided'));
-  }
+  return new Promise((resolve, reject) => {
+    const user = Users.find(user => user.email === email);
+    if (!user) request(reject('User not found'));
+    else {
+      if (user.pass === pass) {
+        persist(user);
+        request(resolve());
+      } else request(reject('Wrong password provided'));
+    }
+  });
 };
 
 const GetUser = userId => {

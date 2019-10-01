@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react';
-import './App.css';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Login from './containers/Login/Login';
 import Home from './containers/Home/Home';
 import * as Authenticate from './fakeAuth';
+import './App.css';
+// import './bootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   let routes = [];
-
-  const test = () => {
-    console.log('test');
-  };
 
   const id = Authenticate.IsAuthenticated();
   if (id) {

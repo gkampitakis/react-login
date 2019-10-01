@@ -4,9 +4,10 @@ input {
   width: 70%;
   min-height: 60px;
   color: black;
-  font-size: 25px;
+  font-size: 25px !important;
   text-align: center;
-  margin-top: 10px;
+  margin: auto !important;
+  margin-top: 10px !important;
 }
 
 .submit {
@@ -24,4 +25,9 @@ input {
 .submit:disabled {
   cursor: not-allowed;
   opacity: 0.6;
+}
+
+.spinner {
+  position: absolute;
+  left: calc(50% - 20px);
 }
