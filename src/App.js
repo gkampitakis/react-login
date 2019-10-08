@@ -1,36 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Login from './containers/Login/Login';
 import Home from './containers/Home/Home';
-import * as Authenticate from './fakeAuth';
+import * as Authenticate from './authService';
 import './App.css';
 // import './bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  let routes = [];
+  const [IsAuthenticated, setAuthenticated] = useState(false);
 
-  const id = Authenticate.IsAuthenticated();
-  if (id) {
-    routes.push(<Route key="1" path="/home/:id" exact component={Home} />);
-    routes.push(<Route key="2" component={Home} />);
-  } else {
-    routes.push(
-      <Route
-        key="1"
-        path="/login"
-        exact
-        render={() => <Login login={Authenticate.Login} />}
-      />
-    );
-    routes.push(
-      <Route key="2" render={() => <Login login={Authenticate.Login} />} />
-    );
-  }
+  useEffect(() => {
+    setAuthenticated(Authenticate.IsAuthenticated());
+  }, []);
+
+  const logoutComp = () => {
+    setAuthenticated(false);
+    Authenticate.Logout();
+  };
 
   return (
     <div className="App">
-      <Switch>{routes.map(route => route)}</Switch>
+      {IsAuthenticated ? (
+        <Switch>
+          <Route
+            key="1"
+            render={() => <Home auth={logoutComp} />}
+            path="/home"
+            exact
+          />
+          <Route key="2" render={() => <Home auth={logoutComp} />} />
+        </Switch>
+      ) : (
+        <Switch>
+          <Route
+            key="1"
+            path="/login"
+            exact
+            render={() => (
+              <Login login={Authenticate.Login} auth={setAuthenticated} />
+            )}
+          />
+          <Route
+            key="2"
+            render={() => (
+              <Login login={Authenticate.Login} auth={setAuthenticated} />
+            )}
+          />
+        </Switch>
+      )}
     </div>
   );
 }

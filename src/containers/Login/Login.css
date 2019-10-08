@@ -31,3 +31,10 @@ input {
   position: absolute;
   left: calc(50% - 20px);
 }
+
+.toggleIcon {
+  position: relative;
+  top: 50px;
+  left: 30%;
+  font-size: 25px;
+}

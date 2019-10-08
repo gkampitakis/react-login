@@ -23,16 +23,11 @@ class Home extends Component {
       });
   }
 
-  test = () => {
-    // this.setState({ userId: 5 });
-    this.props.history.push('/home/25');
-  };
-
   render() {
     return (
       <React.Fragment>
         <h1>Home Page</h1>
-        <button onClick={this.test}>Test update</button>
+        <button onClick={this.props.auth.bind(this)}>Log Out</button>
         <Infowidget id={this.state.userId} />
       </React.Fragment>
     );

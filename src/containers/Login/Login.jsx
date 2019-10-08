@@ -3,6 +3,8 @@ import './Login.css';
 import * as validator from 'validator';
 import * as _ from 'lodash';
 import { Spinner } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
+import { FaEyeSlash, FaEye } from 'react-icons/fa';
 
 const errorMessageStyle = {
   color: 'red',
@@ -11,7 +13,7 @@ const errorMessageStyle = {
   margin: 'auto'
 };
 
-export default class Login extends Component {
+class Login extends Component {
   // constructor
   state = {
     form: {
@@ -29,8 +31,12 @@ export default class Login extends Component {
         this.state.form.email.value,
         this.state.form.password.value
       );
-      //FIXME: redirect here
-      console.log('all good');
+      this.props.auth(true);
+      this.props.history.push('/home');
+      //FIXME:invalidate on unauthorized and throw unauthorized from server
+      //FIXME: image on model
+      //FIXME: code refactor more sexy react
+      //FIXME: register page
     } catch (err) {
       console.error(err);
     } finally {
@@ -52,8 +58,6 @@ export default class Login extends Component {
 
   validateEmail = _.debounce(() => {
     const { form } = this.state;
-    console.log('test');
-    console.log(this.state.form.email.value);
 
     if (form.email.value)
       form.email.valid = validator.isEmail(form.email.value) ? true : false;
@@ -97,6 +101,14 @@ export default class Login extends Component {
           ) : (
             <div style={errorMessageStyle}>Invalid Email</div>
           )}
+          {this.state.form.password.visible ? (
+            <FaEye className="toggleIcon" onClick={this.toggleVisibility} />
+          ) : (
+            <FaEyeSlash
+              className="toggleIcon"
+              onClick={this.toggleVisibility}
+            />
+          )}
           <input
             value={this.state.form.password.value}
             onChange={this.passwordOnChange}
@@ -118,10 +130,10 @@ export default class Login extends Component {
             Login
           </button>
         </form>
-        <button onClick={this.toggleVisibility}>Visibility</button>
-        <button onClick={this.toggleLoading}>Loading</button>
         {loading}
       </Fragment>
     );
   }
 }
+
+export default withRouter(Login);
