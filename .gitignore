@@ -1,23 +1,27 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+#Ignoring both projects codes 
 
 # dependencies
-/node_modules
-/.pnp
-.pnp.js
+/nodeAuth/node_modules
+/react-routes/node_modules
+/react-routes/.pnp
+/react-routes.pnp.js
 
-# testing
-/coverage
+# Build foldesrs
+/react-routes/build
+/nodeAuth/dist
 
-# production
-/build
+
+#Vs code 
+/react-routes/.vscode
+/nodeAuth/.vscode
 
 # misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+/react-routes/.DS_Store
+/react-routes/.env.local
+/react-routes/.env.development.local
+/react-routes/.env.test.local
+/react-routes/.env.production.local
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+/react-routes/npm-debug.log*
+/react-routes/yarn-debug.log*
+/yarn-error.log*

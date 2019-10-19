@@ -48,4 +48,6 @@ const Logout = () => {
   localStorage.removeItem('token');
 };
 
-export { Login, Logout, IsAuthenticated, GetUser };
+const createAccount = () => {};
+
+export { Login, Logout, IsAuthenticated, GetUser, createAccount };

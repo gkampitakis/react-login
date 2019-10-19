@@ -3,7 +3,7 @@ import './Login.css';
 import * as validator from 'validator';
 import * as _ from 'lodash';
 import { Spinner } from 'react-bootstrap';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { FaEyeSlash, FaEye } from 'react-icons/fa';
 
 const errorMessageStyle = {
@@ -20,6 +20,9 @@ class Login extends Component {
       email: { value: '', valid: true },
       password: { value: '', visible: false }
     },
+    error: {
+      message: ''
+    },
     loading: false
   };
 
@@ -33,12 +36,15 @@ class Login extends Component {
       );
       this.props.auth(true);
       this.props.history.push('/home');
-      //FIXME:invalidate on unauthorized and throw unauthorized from server
-      //FIXME: image on model
-      //FIXME: code refactor more sexy react
-      //FIXME: register page
     } catch (err) {
-      console.error(err);
+      let { error } = this.state;
+      error.message = err.response.data.message;
+      this.setState({ ...this.state, error });
+
+      setTimeout(() => {
+        error.message = '';
+        this.setState({ ...this.state, error });
+      }, 4000);
     } finally {
       this.toggleLoading();
     }
@@ -129,8 +135,14 @@ class Login extends Component {
           >
             Login
           </button>
+          {this.state.error.message ? (
+            <div className="errorMessage">{this.state.error.message}</div>
+          ) : null}
         </form>
         {loading}
+        <div className="footer">
+          Not registered ? <Link to="/register">Create Account</Link>
+        </div>
       </Fragment>
     );
   }

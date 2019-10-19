@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Login from './containers/Login/Login';
 import Home from './containers/Home/Home';
+import Register from './containers/Register/Register';
 import * as Authenticate from './authService';
 import './App.css';
-// import './bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -43,6 +43,14 @@ function App() {
           />
           <Route
             key="2"
+            path="/register"
+            exact
+            render={() => (
+              <Register createAccount={Authenticate.createAccount} />
+            )}
+          />
+          <Route
+            key="3"
             render={() => (
               <Login login={Authenticate.Login} auth={setAuthenticated} />
             )}
