@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 const Infowidget = props => {
-  return <h2>User Info Widget with Id:{props.id}</h2>;
+  return (
+    <Fragment>
+      <h2>Hello: {props.user.name}</h2>
+      <img src={props.user.image} alt="" />
+    </Fragment>
+  );
 };
 
 export default Infowidget;

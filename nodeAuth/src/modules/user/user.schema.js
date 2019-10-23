@@ -5,7 +5,7 @@ import crypto from 'crypto';
 const UserSchema = new Schema({
   image: {
     type: String,
-    required: true
+    default: 'https://via.placeholder.com/450'
   },
   name: {
     type: String,

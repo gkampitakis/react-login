@@ -34,19 +34,19 @@ class Login extends Component {
         this.state.form.email.value,
         this.state.form.password.value
       );
+      this.toggleLoading();
       this.props.auth(true);
       this.props.history.push('/home');
     } catch (err) {
       let { error } = this.state;
       error.message = err.response.data.message;
       this.setState({ ...this.state, error });
+      this.toggleLoading();
 
       setTimeout(() => {
         error.message = '';
         this.setState({ ...this.state, error });
       }, 4000);
-    } finally {
-      this.toggleLoading();
     }
   };
 

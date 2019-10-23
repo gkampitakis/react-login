@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+const serverUrl = 'http://localhost:2000/';
+
 function authHeader() {
-  const { token } = JSON.parse(localStorage.getItem('token'));
+  const token = JSON.parse(localStorage.getItem('token'));
+
   if (token) return { 'Authorization': 'Bearer ' + token };
   else return {};
 }
@@ -13,7 +16,7 @@ const Login = (email, pass) => {
   return new Promise((resolve, reject) => {
     axios
       .post(
-        'http://localhost:2000/auth',
+        serverUrl + 'auth',
         {
           password: pass,
           email
@@ -32,7 +35,8 @@ const GetUser = () => {
   const headers = {
     ...authHeader()
   };
-  return axios.get('http://localhost:2000/users');
+
+  return axios.get(serverUrl + 'users', { headers: headers });
 };
 
 const IsAuthenticated = () => {
@@ -48,6 +52,13 @@ const Logout = () => {
   localStorage.removeItem('token');
 };
 
-const createAccount = () => {};
+const createAccount = (name, email, image, password) => {
+  return axios.post(serverUrl + 'users', {
+    name,
+    email,
+    image,
+    password
+  });
+};
 
 export { Login, Logout, IsAuthenticated, GetUser, createAccount };

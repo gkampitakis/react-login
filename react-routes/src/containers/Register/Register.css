@@ -1,0 +1,13 @@
+.submit {
+  margin-top: 15px;
+  background-color: blueviolet;
+  color: white;
+  font-size: 25px;
+  /* border:; */
+}
+
+.errorMessage {
+  color: red;
+  font-weight: 900;
+  margin-top: 10px;
+}

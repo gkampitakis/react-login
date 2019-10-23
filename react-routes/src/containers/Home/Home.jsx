@@ -4,31 +4,32 @@ import Infowidget from '../../components/InfoWidget/Infowidget';
 
 class Home extends Component {
   state = {
-    userId: ''
+    user: {},
+    loading: true
   };
 
-  componentDidMount() {
-    const {
-      match: {
-        params: { id }
-      }
-    } = this.props;
-    this.setState({ userId: id });
+  async componentDidMount() {
+    try {
+      const { data } = await this.props.getUser();
+      this.setState({ user: data, loading: false });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  componentDidUpdate() {
-    if (this.state.userId !== this.props.match.params.id)
-      this.setState({ userId: this.props.match.params.id }, () => {
-        console.log('Hello World');
-      });
-  }
+  logOut = () => {
+    this.props.auth();
+    this.props.history.push('/login');
+  };
 
   render() {
-    return (
+    return this.state.loading ? null : (
       <React.Fragment>
         <h1>Home Page</h1>
-        <button onClick={this.props.auth.bind(this)}>Log Out</button>
-        <Infowidget id={this.state.userId} />
+
+        <Infowidget user={this.state.user} />
+
+        <button onClick={this.logOut}>Log Out</button>
       </React.Fragment>
     );
   }
