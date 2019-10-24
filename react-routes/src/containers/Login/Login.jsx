@@ -35,8 +35,9 @@ class Login extends Component {
         this.state.form.password.value
       );
       this.toggleLoading();
-      this.props.auth(true);
+
       this.props.history.push('/home');
+      this.props.auth(true);
     } catch (err) {
       let { error } = this.state;
       error.message = err.response.data.message;
@@ -79,23 +80,32 @@ class Login extends Component {
   };
 
   toggleVisibility = () => {
+    if (this.state.loading) return;
     const { form } = this.state;
     form.password.visible = !form.password.visible;
     this.setState({ form: form });
   };
 
   render() {
+    const loadingStyle = { opacity: this.state.loading ? '0.8' : '1' };
+
     let loading = this.state.loading ? (
-      <Spinner className="spinner" animation="border" role="status">
+      <Spinner
+        className="spinner"
+        style={{ top: '50%' }}
+        animation="border"
+        role="status"
+      >
         <span className="sr-only">Loading...</span>
       </Spinner>
     ) : null;
 
     return (
       <Fragment>
-        <h1>Login Please</h1>
-        <form action="">
+        <h1 style={loadingStyle}>Login Please</h1>
+        <form style={loadingStyle} action="">
           <input
+            disabled={loading}
             value={this.state.form.email.value}
             onChange={this.emailOnChange}
             onKeyUp={this.validateEmail}
@@ -111,11 +121,13 @@ class Login extends Component {
             <FaEye className="toggleIcon" onClick={this.toggleVisibility} />
           ) : (
             <FaEyeSlash
+              style={loadingStyle}
               className="toggleIcon"
               onClick={this.toggleVisibility}
             />
           )}
           <input
+            disabled={loading}
             value={this.state.form.password.value}
             onChange={this.passwordOnChange}
             placeholder="Password"
@@ -140,7 +152,7 @@ class Login extends Component {
           ) : null}
         </form>
         {loading}
-        <div className="footer">
+        <div className="footer" style={loadingStyle}>
           Not registered ? <Link to="/register">Create Account</Link>
         </div>
       </Fragment>

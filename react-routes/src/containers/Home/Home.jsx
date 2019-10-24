@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Infowidget from '../../components/InfoWidget/Infowidget';
+import './Home.css';
+import { FaSignOutAlt } from 'react-icons/fa';
+import { whileStatement } from '@babel/types';
 
 class Home extends Component {
   state = {
@@ -25,11 +28,15 @@ class Home extends Component {
   render() {
     return this.state.loading ? null : (
       <React.Fragment>
-        <h1>Home Page</h1>
+        <div className="titleBar">
+          <h1>Home Page</h1>
+          <button className="titleLogOut" onClick={this.logOut}>
+            Logout
+            <FaSignOutAlt style={{ margin: '0 10px' }} />
+          </button>
+        </div>
 
         <Infowidget user={this.state.user} />
-
-        <button onClick={this.logOut}>Log Out</button>
       </React.Fragment>
     );
   }

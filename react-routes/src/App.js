@@ -81,10 +81,3 @@ function App() {
 }
 
 export default App;
-
-//TODO:make UI more sexy
-//TODO: refactor code to be better
-//TODO: README
-//TODO: publish
-//TODO: do a reading for keycloak
-//FIXME: bug with reloads
