@@ -7,5 +7,6 @@ dotenv.config({ path });
 export default {
 	prod: process.env.NODE_ENV === 'prod',
 	port: parseInt(process.env.PORT),
+	secret: process.env.SECRET || 'default secret',
 	maxAge: parseInt(process.env.COOKIE_AGE) || 2592000
 };
