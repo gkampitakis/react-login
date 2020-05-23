@@ -8,5 +8,9 @@ export default {
 	prod: process.env.NODE_ENV === 'prod',
 	port: parseInt(process.env.PORT),
 	secret: process.env.SECRET || 'default secret',
-	maxAge: parseInt(process.env.COOKIE_AGE) || 2592000
+	maxAge: parseInt(process.env.COOKIE_AGE) || 2592000,
+	gh: {
+		clientId: process.env.GH_CLIENT_ID,
+		clientSecret: process.env.GH_CLIENT_SECRET
+	}
 };

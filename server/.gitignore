@@ -1,3 +1,4 @@
 node_modules
 dist
 privkey.pem
+package-lock.json
