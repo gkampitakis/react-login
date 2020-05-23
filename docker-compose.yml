@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  client:
+    container_name: client
+    build:
+      context: ./client
+    ports:
+      - 3000:3000
+  api:
+    container_name: server
+    build:
+      context: ./server
+    ports:
+      - 5000:5000
+  nginx:
+    container_name: nginx
+    build:
+      context: ./nginx
+    ports:
+      - 80:80

@@ -10,7 +10,8 @@
 		"clean": "rimraf dist coverage",
 		"start:prod": "NODE_ENV=prod node dist/server.js",
 		"start:dev": "NODE_ENV=dev ts-node-dev --poll --respawn --transpileOnly server.ts",
-		"eslint": "eslint src/**/*.ts"
+		"eslint": "eslint src/**/*.ts",
+		"keygen": "sh scripts/private_key.sh"
 	},
 	"dependencies": {
 		"axios": "^0.19.2",

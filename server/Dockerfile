@@ -20,6 +20,6 @@ WORKDIR /app
 
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/package.json /app/.env.prod ./
+COPY --from=build /app/package.json /app/.env.prod /app/privkey.pem ./
 
 CMD ["npm","run","start:prod"]

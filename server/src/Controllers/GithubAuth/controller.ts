@@ -18,7 +18,7 @@ class Controller {
 
 		res.setCookie('rc_login', data.access_token, cookieOptions(true)); //TODO: this needs handling
 
-		res.redirect('http://localhost:3000'); //TODO:this needs handling as well
+		res.redirect('/'); //TODO:this needs handling as well to redirect to home
 	}
 }
 
