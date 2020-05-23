@@ -59,7 +59,8 @@
 			"src/**/*.ts",
 			"!src/**/index.ts",
 			"!src/routes.ts",
-			"!src/**/*.d.ts"
+			"!src/**/*.d.ts",
+			"!src/**/*/index.ts"
 		],
 		"coverageThreshold": {
 			"global": {

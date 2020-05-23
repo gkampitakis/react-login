@@ -1,4 +1,4 @@
-import configuration from '../../configuration';
+import configuration from '../../../configuration';
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';

@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { ServerResponse } from 'http';
-import { cookieOptions } from '../../Utils/cookie';
+import { cookieOptions } from '../../Utils/cookie/cookie';
 import configuration from '../../../configuration';
 import axios from 'axios';
 
