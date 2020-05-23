@@ -1,0 +1,7 @@
+README.md
+.env.development
+!.env.production
+node_modules
+coverage
+.gitignore
+Dockerfile
