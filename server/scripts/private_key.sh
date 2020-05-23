@@ -1,0 +1,1 @@
+openssl genrsa -out ./dist/privkey.pem 2048
