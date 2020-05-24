@@ -1,17 +1,16 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { ServerResponse } from 'http';
-import axios from 'axios';
 import { Authentication } from '../../Components/Authentication';
 import { User } from '../../Utils/cookie/interfaces';
+import axios from 'axios';
 import configuration from '../../../configuration';
 
 class Controller extends Authentication {
 	public async callback(req: FastifyRequest, res: FastifyReply<ServerResponse>): Promise<void> {
-		const { clientId, clientSecret } = configuration.fb,
-			{ code } = req.query;
+		const { code } = req.query;
 
 		try {
-			const token = await this.getToken(code, clientId, clientSecret);
+			const token = await this.getToken(code);
 
 			const data = await this.getUserData(token);
 
@@ -34,31 +33,33 @@ class Controller extends Authentication {
 		};
 	}
 
-	protected getToken(code: string, clientId: string, clientSecret: string): Promise<string> {
+	protected getToken(code: string): Promise<string> {
+		const { client_id, client_secret, token_url, redirect_uri } = configuration.fb;
+
 		return axios({
 			method: 'GET',
-			url: `https://graph.facebook.com/v4.0/oauth/access_token`,
+			url: token_url,
 			params: {
-				client_id: clientId,
-				client_secret: clientSecret,
-				redirect_uri: 'http://localhost/api/auth/fb/callback',
+				client_id,
+				client_secret,
+				redirect_uri,
 				code
 			}
 		}).then(({ data }) => data.access_token);
 	}
 
 	private getUserData(token: string): Promise<any> {
+		const { user_data_url, user_data } = configuration.fb;
+
 		return axios({
 			method: 'GET',
-			url: 'https://graph.facebook.com/me',
+			url: user_data_url,
 			params: {
 				access_token: token,
-				fields: ['email', 'first_name', 'last_name', 'picture.type(large)'].join(',')
+				fields: user_data.join(',')
 			}
 		}).then(({ data }) => data);
 	}
 }
 
 export default new Controller();
-
-//TODO: move all urls to configuration

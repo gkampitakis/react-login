@@ -1,18 +1,17 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { ServerResponse } from 'http';
 import { cookieOptions } from '../../Utils/cookie/cookie';
-import configuration from '../../../configuration';
-import axios from 'axios';
 import { User } from '../../Utils/cookie/interfaces';
 import { Authentication } from '../../Components/Authentication';
+import configuration from '../../../configuration';
+import axios from 'axios';
 
 class Controller extends Authentication {
 	public async callback(req: FastifyRequest, res: FastifyReply<ServerResponse>): Promise<void> {
-		const { clientId, clientSecret } = configuration.gh,
-			{ code } = req.query;
+		const { code } = req.query;
 
 		try {
-			const token = await this.getToken(code, clientId, clientSecret);
+			const token = await this.getToken(code);
 
 			const data = await this.getUserData(token);
 
@@ -34,10 +33,12 @@ class Controller extends Authentication {
 		};
 	}
 
-	protected getToken(code: string, clientId: string, clientSecret: string): Promise<string> {
+	protected getToken(code: string): Promise<string> {
+		const { token_url } = configuration.gh;
+
 		return axios({
 			method: 'GET',
-			url: `https://github.com/login/oauth/access_token?client_id=${clientId}&client_secret=${clientSecret}&code=${code}`,
+			url: token_url(code),
 			headers: {
 				accept: 'application/json'
 			}
@@ -45,9 +46,11 @@ class Controller extends Authentication {
 	}
 
 	private getUserData(token: string): Promise<any> {
+		const { user_url, user_email_url } = configuration.gh;
+
 		const userInfo = axios({
 			method: 'GET',
-			url: `https://api.github.com/user`,
+			url: user_url,
 			headers: {
 				Authorization: `token ${token}`
 			}
@@ -55,7 +58,7 @@ class Controller extends Authentication {
 
 		const emails = axios({
 			method: 'GET',
-			url: `https://api.github.com/user/emails`,
+			url: user_email_url,
 			headers: {
 				Authorization: `token ${token}`
 			}
