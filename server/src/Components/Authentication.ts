@@ -6,4 +6,6 @@ export abstract class Authentication {
 	}
 
 	protected abstract userDTO(...params: any): User;
+
+	protected abstract getToken(...params: any): Promise<any>;
 }
