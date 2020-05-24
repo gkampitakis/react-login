@@ -4,4 +4,7 @@ export default {
     clientId: process.env.REACT_APP_GH_CLIENT_ID,
   },
   twitter: {},
+  fb: {
+    clientId: process.env.REACT_APP_FB_CLIENT_ID,
+  },
 };
