@@ -12,5 +12,9 @@ export default {
 	gh: {
 		clientId: process.env.GH_CLIENT_ID,
 		clientSecret: process.env.GH_CLIENT_SECRET
+	},
+	twitter: {
+		key: process.env.TWITTER_KEY,
+		secretKey: process.env.TWITTER_SECRET_KEY
 	}
 };
