@@ -12,9 +12,8 @@ export default {
 	gh: {
 		client_id: process.env.GH_CLIENT_ID,
 		client_secret: process.env.GH_CLIENT_SECRET,
-		token_url: function (code: string) {
-			return `https://github.com/login/oauth/access_token?client_id=${this.client_id}&client_secret=${this.client_secret}&code=${code}`;
-		},
+		token_url: (code: string) =>
+			`https://github.com/login/oauth/access_token?client_id=${process.env.GH_CLIENT_ID}&client_secret=${process.env.GH_CLIENT_SECRET}&code=${code}`,
 		user_url: 'https://api.github.com/user',
 		user_email_url: 'https://api.github.com/user/emails'
 	},
