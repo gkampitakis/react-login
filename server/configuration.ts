@@ -18,6 +18,13 @@ export default {
 		user_url: 'https://api.github.com/user',
 		user_email_url: 'https://api.github.com/user/emails'
 	},
+	google: {
+		client_id: process.env.GOOGLE_CLIENT_ID,
+		client_secret: process.env.GOOGLE_CLIENT_SECRET,
+		token_url: 'https://oauth2.googleapis.com/token',
+		redirect_uri: 'http://localhost/api/auth/google/callback',
+		user_data_url: 'https://www.googleapis.com/oauth2/v2/userinfo'
+	},
 	twitter: {
 		client_id: process.env.TWITTER_KEY,
 		client_secret: process.env.TWITTER_SECRET_KEY,

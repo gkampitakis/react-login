@@ -15,13 +15,10 @@ class Controller extends Authentication {
 			const data = await this.getUserData(token);
 
 			console.log(this.userDTO(data));
-
-			res.redirect('/'); //FIXME:
-			//FIXME: the setcookie as well
 		} catch (error) {
 			console.error(error);
-
-			res.redirect('/'); //FIXME:
+		} finally {
+			res.redirect('/');
 		}
 	}
 
