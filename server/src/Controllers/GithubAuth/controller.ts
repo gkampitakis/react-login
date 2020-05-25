@@ -17,7 +17,7 @@ class Controller extends Authentication {
 
 			console.log(this.userDTO(data));
 
-			res.setCookie('rc_login', token, cookieOptions(true)); //TODO: this needs handling, and we need to create a token containing more data
+			// res.setCookie('rc_login', token, cookieOptions(true)); //TODO: this needs handling, and we need to create a token containing more data
 
 			res.redirect('/'); //TODO:this needs handling as well to redirect to home
 		} catch (error) {

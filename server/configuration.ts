@@ -20,7 +20,9 @@ export default {
 	},
 	twitter: {
 		client_id: process.env.TWITTER_KEY,
-		client_secret: process.env.TWITTER_SECRET_KEY
+		client_secret: process.env.TWITTER_SECRET_KEY,
+		callback: 'http://127.0.0.1:80/api/auth/twitter/callback',
+		token_request_url: (token) => `https://api.twitter.com/oauth/authenticate?oauth_token=${token}`
 	},
 	fb: {
 		client_id: process.env.FB_APP_ID,
