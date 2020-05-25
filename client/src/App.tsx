@@ -20,6 +20,7 @@ function App() {
       <a href={gh.url()}>Test Github Login</a>
       <a href={fb.url(fb_params)}>Test Facebook Login</a>
       <a href={twitter.url}>Test Twitter Login</a>
+      <a href={""}>Test Google Login</a>
     </div>
   );
 }
